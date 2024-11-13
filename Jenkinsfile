@@ -25,6 +25,7 @@ pipeline {
                              steps {
                                  script {
 
+                            sh 'mvn test jacoco:report'
                             sh """
                             mvn sonar:sonar  \
                             -Dsonar.projectKey=gestion-station-ski \
