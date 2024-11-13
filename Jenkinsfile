@@ -21,7 +21,7 @@ pipeline {
                     }
          }
 
-         stage('COMPILING') {
+         stage('Test') {
                              steps {
                                  script {
 
