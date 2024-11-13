@@ -14,10 +14,15 @@ pipeline {
                     steps {
                         script {
                             // Clean and install dependencies
-                            sh 'mvn clean install'
+                            sh 'mvn clean '
+                            sh 'mvn compile'
+
                         }
                     }
                 }
+
+
+
 
     }
 
