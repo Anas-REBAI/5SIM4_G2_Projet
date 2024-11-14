@@ -10,6 +10,13 @@ pipeline {
             }
         }
 
+ stage('docker init'){
+            steps {
+                sh 'docker-compose up -d --scale Spring=0'
+            }
+        }
+
+
          stage('COMPILING') {
                     steps {
                         script {
@@ -20,6 +27,8 @@ pipeline {
                         }
                     }
          }
+
+
 
         stage('Test') {
             steps {
@@ -45,9 +54,16 @@ pipeline {
                     }
          }
 
+         stage('docker Build') {
+                     steps {
+                         sh 'docker build -t walidmarzouk/gestion-station-ski:1.0 .'
+                           }
+                                }
+
          stage('Deploy ') {
                      steps {
                          sh 'mvn deploy'
+                         sh 'docker-compose up -d Spring'
                      }
                  }
 
