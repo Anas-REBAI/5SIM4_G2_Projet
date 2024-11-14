@@ -12,7 +12,7 @@ pipeline {
 
  stage('docker init'){
             steps {
-                sh 'docker compose up -d --scale'
+                sh 'docker compose up -d --scale Spring=0'
             }
         }
 

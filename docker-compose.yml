@@ -1,51 +1,30 @@
-version: "3.8"
-
+version: '2'
 services:
-  # Service pour la base de données MySQL
-  db:
-    image: mysql:5.7
-    restart: unless-stopped
-    container_name: mysql_station_ski
+
+  db-mysql:
+    image: "mysql:5.6"
+    container_name: db-mysql
     environment:
-      MYSQL_DATABASE: stationSki
-      MYSQL_ROOT_PASSWORD: root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD="yes"
     ports:
       - "3306:3306"
+    restart: unless-stopped
     volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - backend-network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      retries: 5
-
-  # Service pour l'application Spring Boot
-  app:
-    image: walidmarzouk/gestion-station-ski:1.0
-    container_name: spring_station_ski
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      SPRING_APPLICATION_JSON: '{
-              "spring.datasource.url"  : "jdbc:mysql://db:3306/stationSki?createDatabaseIfNotExist=true",
-              "spring.datasource.username" : "root",
-              "spring.datasource.password" : "root",
-              "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
-              "spring.jpa.hibernate.ddl-auto" : "update"
-            }'
-    stdin_open: true
-    tty: true
-    restart: on-failure
+      - 'mysql-config:/mysql/config'
+      - 'mysql-data:/mysql/data'
+  Spring:
+    container_name: walid-devops
+    build: .
     ports:
       - "8089:8089"
-    networks:
-      - backend-network
-
+    restart: unless-stopped
+    image: "walid-devops"
 
 volumes:
-  mysql_data:
-
-networks:
-  backend-network:
+  SonarQube_data:
+  SonarQube_extentions:
+  SonarQube_logs:
+  nexus-data:
+  mysql-config:
+  mysql-data:
