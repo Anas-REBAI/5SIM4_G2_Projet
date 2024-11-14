@@ -74,7 +74,7 @@ pipeline {
                     def dockerHubUsername = 'waliiidmrz'
                     def dockerHubPassword = '201JMT3068w@'
                     sh "docker login -u ${dockerHubUsername} -p ${dockerHubPassword}"
-                    sh "docker tag walidmarzouk ${dockerHubUsername}/walid-devops:latest"
+                    sh "docker tag walid-devops ${dockerHubUsername}/walid-devops:latest"
                     sh "docker push ${dockerHubUsername}/walid-devops:latest"
                 }
             }
