@@ -39,6 +39,19 @@ pipeline {
         }
 
 
+         stage('nexus Build') {
+                    steps {
+                        sh 'mvn package -Dmaven.build.finalName=gestion-station-ski'
+                    }
+         }
+
+         stage('Deploy ') {
+                     steps {
+                         sh 'mvn deploy'
+                     }
+                 }
+
+
 
 
 
